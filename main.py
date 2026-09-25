@@ -6,6 +6,11 @@ import time
 load_dotenv()
 client = genai.Client()
 model_type  = ["gemini-3.5-flash-lite", "gemini-3.8-flash"]
+st.set_page_config(
+    page_title="AI Travel Planner",
+    page_icon="✈️",
+    layout="wide"
+)
 st.title("Travel Assistant 🌍")
 st.caption("Tumhara personal travel planner")
 
