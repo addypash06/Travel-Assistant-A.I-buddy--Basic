@@ -73,7 +73,6 @@ if st.button("Plan Trip: "):
             input=prompt,
             generation_config={
                 "temperature": 0.7,
-                "top-k": 20,
                 },
         )
         with st.spinner("Please wait!"):
