@@ -14,9 +14,9 @@ st.set_page_config(
 st.title("Travel Assistant 🌍")
 st.caption("Tumhara personal travel planner")
 
-location = st.text_input("Select location you wanna go?", placeholder="Eg. Paris")
+location = st.text_input("*Select location you wanna go?", placeholder="Eg. Paris")
 days = st.number_input("Enter days: ", min_value=1, max_value=365)
-budget = st.text_input("Choose budget",placeholder="Eg. ₹15,000")
+budget = st.text_input("*Choose budget",placeholder="Eg. ₹15,000")
 no_of_people = st.slider("How many people",1,100,3)
 places_to_be_cover = st.text_input("Specific interest places you want to visit in the given provided location", placeholder="Type here")
 extras = st.text_area("Enter here anything you wanna do or want changes in plan:", placeholder="Eg. I prefer visiting nature more")
@@ -67,23 +67,25 @@ And add many more as per requirement
 
 
 if st.button("Plan Trip: "):
-    if location and days and budget:
-        interaction = client.interactions.create(
-            model=model_type[0],
-            input=prompt,
-            generation_config={
-                "temperature": 0.7,
+    if not budget or not location:
+        st.warning("Please fill up the budget or location")
+
+    else:
+        with st.spinner("Generating your travel plan..."):
+
+            interaction = client.interactions.create(
+                model=model_type[0],
+                input=prompt,
+                generation_config={
+                    "temperature": 0.7,
                 },
-        )
-        with st.spinner("Please wait!"):
-            time.sleep(5)
+            )
+
         st.success("Plan Generated!")
         st.write(f"Your destination is **{location}**")
         st.write(f"No. of days: **{days}**")
         st.snow()
         st.write(interaction.output_text)
 
-    else:
-        st.warning("Please fill up the all above details")
 else:
     st.warning("Please fill up the all above details")
